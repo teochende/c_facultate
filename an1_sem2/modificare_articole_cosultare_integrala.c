@@ -93,7 +93,7 @@ int modificare_nota(char* nameb) {
 
 int main() {
     char nameb[30] = "Studenti_s_f2.dat";
-	char namet[40] = "./fisier_txt_pt_popular_func.txt";
+    char namet[40] = "./fisier_txt_pt_popular_func.txt";
 
 	FILE* f_txt;
 
