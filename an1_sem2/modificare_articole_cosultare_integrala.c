@@ -15,12 +15,12 @@ int converteste_bin_txt(char* nameb, char* namet) {
     STUDENT x;
     int i;
     FILE* f_bin; //fisierul binar
-	FILE *f_txt; //fisierul txt
+    FILE *f_txt; //fisierul txt
     //rewind(f_bin);
 
   f_bin = fopen(nameb, "rb+"); //fisierub binar din care citesc
 
-	f_txt = fopen(namet, "wt+");
+  f_txt = fopen(namet, "wt+");
 
     fread(&x, sizeof(STUDENT), 1, f_bin);
     while (!feof(f_bin))
