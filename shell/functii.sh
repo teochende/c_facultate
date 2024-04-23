@@ -1,42 +1,68 @@
 #!/bin/bash
 
-# documentatie:
-# http://www.cs.umsl.edu/~sanjiv/classes/cs2750/lectures/kshfns.pdf
-# https://unix.stackexchange.com/questions/232384/argument-string-to-integer-in-bash
-
-# utilizare operator aritmetic: $((...)) pentru a converti din sir in numar'
-# alternativa: utilizare expresie: 'expr $1 + $2;
-
-########################
-# Intrare: doua numere
 #
-# Iesire: un text cu rezultatul adunarii
-########################
-aduna_numere() {
-    # ne asiguram ca se primesc exact 2 parametrii
-    # altfel se afiseaza un mesaj ajutator si se returneaza 0 
-    if [[ $# != 2 ]]
-    then
-        echo 0
-        echo "Utilizare: aduna_numere a b"
-        return
-    fi
-    echo $(($1 + $2))
-    return
+# Site foarte bun:
+# https://www.shellscript.sh/functions.html
+#
+
+# utilizare read:
+# https://www.geeksforgeeks.org/bash-scripting-how-to-read-a-file-line-by-line/?ref=ml_lbp
+
+# https://www.geeksforgeeks.org/bash-scripting-functions/?ref=ml_lbp
+
+creare_vect() {
+    i=0
+    echo -n "introduceti o valoare: "
+
+    read v[0]
+    i=$i+1 
+
+    echo -n "doriti sa mai introduceti o valoare (1 daca da, altceva daca nu)?: "
+    read raspuns
+
+    while [ $raspuns -eq 1 ]
+    do
+        echo -n "introduceti o valoare: "
+        read v[i]
+        i=$i+1    
+        echo -n "doriti sa mai introduceti o valoare( 1 daca da altaceva daca nu )?: "
+        read raspuns
+    done
+ 
+    n=$i
+	
+    #echo "${v[@]}"
+    
+    return 10
 }
 
-utilizeaza_rezultat() {
-    echo "Rezultatul este:" $1
-    return
+
+max_vect() {
+    echo in max_vect: ${v[@]}
+    max=${v[0]}
+    
+    for i in ${v[@]}
+    do
+        echo Valoarea din vector: $i
+        if [ $max -lt $i ]
+        then
+            max=$i
+        fi
+    done
+
+    return 0
 }
 
-# 
-rez_aduna=$(aduna_numere 10 20)
-echo $rez_aduna
+creare_vect
 
-utilizeaza_rezultat $rez_aduna
+# salvare cod de return - ce s-a dat ca parametru la return
+REZ_CREATE=$?
+echo rezultat returnat: $REZ_CREATE
 
-# la acest apel nu se afiseaza mesajele din functia apelata: aduna_numere
-# functia utilizeaza_rezultat afiseaza 'prinde primul mesaj' si-l considera iesirea functiei apelate
-# in acest caz - va fi 0 de la 'echo 0'
-utilizeaza_rezultat $(aduna_numere 100)
+# vectorul v este variabila globala, vizibila in afara functiei
+echo VECTOR: ${v[@]}
+
+# vectorul v este vizibil si in interiorul functiei max_vect
+max_vect
+# dupa executia functiei max_vect, max este vizibil si in afara functiei
+echo max = $max
