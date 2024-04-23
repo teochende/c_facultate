@@ -44,7 +44,8 @@ max_vect() {
     for i in ${v[@]}
     do
         echo Valoarea din vector: $i
-        if [ $max -lt $i ]
+	#if [ max -lt $i ] - echivalent cu notatia de mai jos cu [[ ... ]]
+        if [[ $max < $i ]]
         then
             max=$i
         fi
